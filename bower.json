@@ -1,0 +1,20 @@
+{
+  "name": "Cooking Recommendation",
+  "authors": [
+    "David Dedu",
+    "Darius Ceaușescu"
+  ],
+  "dependencies": {
+    "angular": "1.6.7",
+    "bootstrap": "3.3.7"
+
+  },
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
