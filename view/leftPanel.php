@@ -6,26 +6,14 @@
                 Start Bootstrap
             </a>
         </li>
-        <li>
-            <a href="#">Dashboard</a>
-        </li>
-        <li>
-            <a href="#">Shortcuts</a>
-        </li>
-        <li>
-            <a href="#">Overview</a>
-        </li>
-        <li>
-            <a href="#">Events</a>
-        </li>
-        <li>
-            <a href="#">About</a>
-        </li>
-        <li>
-            <a href="#">Services</a>
-        </li>
-        <li>
-            <a href="#">Contact</a>
+        <li ng-repeat="(key, data) in allIngredientsGroupedByCategory">
+            <a href="#">{{key}}
+                <ul>
+                    <li ng-repeat="ingredient in data">
+                        <span">{{ingredient}}</span>
+                    </li>
+                </ul>
+            </a>
         </li>
     </ul>
 </div>

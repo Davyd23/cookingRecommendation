@@ -19,38 +19,3 @@
     <script src="script/controller/mainController.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-<?php
-/*
- * init database
- * */
-require  'external/Medoo.php';
-
-use Medoo\Medoo;
-$database = new Medoo([
-    'database_type' => 'mysql',
-    'database_name' => 'fridgerecomandation',
-    'server' => 'localhost',
-    'username' => 'root',
-    'password' => ''
-]);
-
-// Enjoy
-//$database->insert('ingredient', [
-//    'name' => 'mar'
-//]);
-
-$data = $database->select('ingredient', [
-    'id',
-    'name'
-], [
-    'id' => 2
-]);
-
-echo json_encode($data);
-?>
