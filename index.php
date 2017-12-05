@@ -5,7 +5,10 @@
         Best Cooking App
     </title>
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/components-font-awesome/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="css/simple-sidebar.css">
+
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body ng-app="cookingRecommendation">
 

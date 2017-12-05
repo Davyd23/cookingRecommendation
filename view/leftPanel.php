@@ -3,18 +3,27 @@
     <ul class="sidebar-nav">
         <li class="sidebar-brand">
             <a href="#">
-                Start Bootstrap
+                Your ingredients(<span ng-bind="availableIngredientsList.length"></span>)
             </a>
         </li>
-        <li ng-repeat="(key, data) in allIngredientsGroupedByCategory">
-            <a href="#">{{key}}
-                <ul>
-                    <li ng-repeat="ingredient in data">
-                        <span">{{ingredient}}</span>
-                    </li>
-                </ul>
+        <br>
+        <li class="sidebar-brand">
+            <a href="#">
+                Cooking Recommendation
             </a>
         </li>
+        <div ng-repeat="(key, data) in allIngredientsGroupedByCategory">
+            <li ng-click="toggleMenuCategory(key)">
+                <a href="#">{{key}}
+                    <i class="fa fa-plus icon-arrow-right" aria-hidden="true"></i>
+                </a>
+            </li>
+            <div class="ingredient_container" ng-if="isCategoryToggled(key)">
+                <span class="ingredient" ng-repeat="ingredient in data">
+                    <input type="checkbox" ng-click="toggleIngredientInAvailableList(ingredient)"> {{ingredient}}
+                </span>
+            </div>
+        </div>
     </ul>
 </div>
 
