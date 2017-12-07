@@ -18,7 +18,7 @@
                     <i class="fa fa-plus icon-arrow-right" aria-hidden="true"></i>
                 </a>
             </li>
-            <div class="ingredient_container" ng-if="isCategoryToggled(key)">
+            <div class="ingredient_container" ng-show="isCategoryToggled(key)">
                 <span class="ingredient" ng-repeat="ingredient in data">
                     <input type="checkbox" ng-click="toggleIngredientInAvailableList(ingredient)"> {{ingredient}}
                 </span>
