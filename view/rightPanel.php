@@ -7,20 +7,15 @@
 
 
         <div id="receipesContainer">
-            <div class="col-md-4" ng-repeat="(key, data) in receipes">
-                <span style="color: blue">{{key}}</span>
+            <div class="col-md-4" ng-repeat="(key, data) in receipes track by $index">
+                <span style="color: blue">{{data.receipeName}}</span>
                 <ul>
-                    <li ng-repeat="ingredient in data">
+                    <li ng-repeat="ingredient in data.ingredients">
                         <span ng-bind="ingredient"></span>
                     </li>
                 </ul>
             </div>
         </div>
-
-
-
-
-
     </div>
 </div>
 

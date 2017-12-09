@@ -25,7 +25,7 @@ $database = new Medoo([
  * inner join receipe r on itr.id_receipe = r.id where i.name in ("banana", "apple") group by r.id order by count(r.name) desc
  * */
 
-$sql = "Select r.id from ingredient_to_receipe itr inner join  ingredient i on itr.id_ingredient = i.id inner join receipe r on itr.id_receipe = r.id where i.name in (";
+$sql = "Select r.id, r.name, count(r.name) as matchingIngredientsCount from ingredient_to_receipe itr inner join  ingredient i on itr.id_ingredient = i.id inner join receipe r on itr.id_receipe = r.id where i.name in (";
 
 for ($i = 0; $i < count($ingredients); $i++) {
     if($i != 0){
@@ -38,6 +38,8 @@ $sql = $sql . ") group by r.id order by count(r.name) desc" ;
 
 
 $data = $database->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+$firstQueryData = $data;
 
 $receipeIds = array();
 
@@ -61,9 +63,18 @@ $aggregratedArray = array();
 for ($i = 0; $i < count($data); $i++) {
     if(!array_key_exists( $data[$i]["receipeName"], $aggregratedArray ) ){
         $aggregratedArray[$data[$i]["receipeName"] ] = array();
+
+        for($j = 0; $j < count($firstQueryData); $j++ ){
+            if($firstQueryData[$j]["name"] === $data[$i]["receipeName"] ){
+                $aggregratedArray[$data[$i]["receipeName"] ]["matchingIngredientsCount"] = $firstQueryData[$j]["matchingIngredientsCount"];
+                break;
+            }
+        }
+
+        $aggregratedArray[$data[$i]["receipeName"] ]["ingredients"] = array();
     }
 
-    array_push($aggregratedArray[$data[$i]["receipeName"] ], $data[$i]["ingredientName"] );
+    array_push($aggregratedArray[$data[$i]["receipeName"] ]["ingredients"], $data[$i]["ingredientName"] );
 }
 
 echo json_encode($aggregratedArray);
