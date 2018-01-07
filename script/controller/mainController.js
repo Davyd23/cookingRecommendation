@@ -29,10 +29,18 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
     * */
 
 
+    var removeExtraTextFromReceipes =function(receipesString){
+        while(receipesString[receipesString.length-1] !== "}"){
+            receipesString = receipesString.slice(0, -1);
+        }
+        return (JSON.parse(receipesString ) );
+    };
+
     $scope.getReceipes = function(){
         if($scope.availableIngredientsList.length !== 0 ){
-            $http.post("service/receipesByIngredients.php", {ingredients:$scope.availableIngredientsList}).then(function(response){
-                $scope.receipes = $scope.orderByIngredientMatchDescendentAndNumberOfIngredientsAscendent(response.data);
+            $http.post("service/receipesByIngredientsFromFood2Fork.php", {ingredients:$scope.availableIngredientsList}).then(function(response){
+                console.log(response);
+                $scope.receipes = removeExtraTextFromReceipes(response.data).recipes;
             }, function(err){
                 console.log(err);
             });
