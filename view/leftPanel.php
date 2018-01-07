@@ -2,16 +2,21 @@
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
         <li class="sidebar-brand">
+            
             <a href="#">
                 Your ingredients(<span ng-bind="availableIngredientsList.length"></span>)
             </a>
+            <hr>
         </li>
         <br>
         <li class="sidebar-brand">
             <a href="#">
                 Cooking Recommendation
             </a>
+            <hr>
+
         </li>
+        <br>
         <div ng-repeat="(key, data) in allIngredientsGroupedByCategory">
             <li ng-click="toggleMenuCategory(key)">
                 <a href="#">{{key}}
