@@ -62,69 +62,157 @@
 					.clr { clear:both; padding:0; margin:0; width:100%; font-size:0px; line-height:0px;}
 				</style>
 				
-		</head>
-		<script src="jquery-3.2.1.min.js"></script>
-				 <style>
-				   .pop-outer1{
-				    background-color: rgba(0, 0, 0, 0.5);
-				    position: fixed;
-				    top: 0;
-				    left: 0;
-				    width: 100%;
-				    height: 100%;
-				   }
+				<script src="jquery-1.10.2.min.js"></script>
+<style>
+body
+{
+	margin:0;
+}
+.modal
+{
+	width:100%;
+	height:100%;
+	position:fixed;
+	top:0;
+	display:none;
+}
+.modal_close
+{
+	width:100%;
+	height:100%;
+	background:rgba(0,0,0,.8);
+	position:fixed;
+	top:0;
+}
+.close
+{
+	cursor:pointer;
+}
+.modal_main
+{
+	width:50%;
+	height:400px;
+	background:#fff;
+	z-index:4;
+	position:fixed;
+	top:16%;
+	border-radius:4px;
+	left:24%;
+	display:none;
+ -webkit-animation-duration: .5s;
+    -webkit-animation-delay: .0s;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    -o-animation-fill-mode: both;
+	    -webkit-backface-visibility: visible!important;
+    -webkit-animation-name: fadeInRight;
+}
 
-				    .pop-outer2{
-				    background-color: rgba(0, 0, 0, 0.5);
-				    position: fixed;
-				    top: 0;
-				    left: 0;
-				    width: 100%;
-				    height: 100%;
-				   }
+.modal2
+{
+	width:100%;
+	height:100%;
+	position:fixed;
+	top:0;
+	display:none;
+}
+.modal_close2
+{
+	width:100%;
+	height:100%;
+	background:rgba(0,0,0,.8);
+	position:fixed;
+	top:0;
+}
+.close2
+{
+	cursor:pointer;
+}
+p{
+	margin-left: 0.5cm;
+}
+.modal_main2
+{
+	width:50%;
+	height:400px;
+	background:#fff;
+	z-index:4;
+	position:fixed;
+	top:16%;
+	border-radius:4px;
+	left:24%;
+	display:none;
+ -webkit-animation-duration: .5s;
+    -webkit-animation-delay: .0s;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    -o-animation-fill-mode: both;
+	    -webkit-backface-visibility: visible!important;
+    -webkit-animation-name: fadeInRight;
+}
 
-				   .pop-inner1{
-				    background-color: #fff;
-				    width: 600px;
-				    height: 600px;
-				    padding:25px;
-				    margin: 15% auto;
-				   }
-		
+@-webkit-keyframes fadeInRight{0%{opacity:0;-webkit-transform:translateX(20px)}100%{opacity:1;-webkit-transform:translateX(0)}}
+
+
+</style>
+<script>
+$(document).ready(function(){
+  $(".call_modal").click(function(){
+	$(".modal").fadeIn();
+	$(".modal_main").show();
+	  });
+});
+$(document).ready(function(){
+  $(".close").click(function(){
+	$(".modal").fadeOut();
+	$(".modal_main").fadeOut();
+	  });
+});
+</script>
+
+<script>
+$(document).ready(function(){
+  $(".call_modal2").click(function(){
+	$(".modal2").fadeIn();
+	$(".modal_main").show();
+	  });
+});
+$(document).ready(function(){
+  $(".close").click(function(){
+	$(".modal2").fadeOut();
+	$(".modal_main").fadeOut();
+	  });
+});
+</script>
 				
-				  </style>
+</head>
+		
+<body>
 
-				   <script>
-					   $(document).ready(function(){
-					    $(".open1").click(function(){
-					     $('.pop-outer1').fadeIn('slow');
-					    }) ;
-					    $(".close1").click(function(){
-					     $('.pop-outer1').fadeOut('slow');
-					    }) ;
-					   }) ;
+<div class="modal">
+<div class="modal_close close"></div>
+<div class="modal_main">
 
-					   $(document).ready(function(){
-					    $(".open2").click(function(){
-					     $('.pop-outer2').fadeIn('slow');
-					    }) ;
-					    $(".close2").click(function(){
-					     $('.pop-outer2').fadeOut('slow');
-					    }) ;
-					   }) ;
-					</script>
-					
-					
-					<body>
-						 
-						  <div style="display: none;" class="pop-outer1">
-						   <div class="pop-inner1">
-						   
-						    <input type="image" src='images/ex.png'  class="close1" />
-						    <br>
-						    <br>
+<img src="/cookingRecommendation/images/ex1.png" class="close" style="margin-top:13px;left:96%;position:fixed;">
+<Br>
+	<br>
+						     <li><a href="abc.php">My restrictions</a></li>
+						       
+                             </li><br><hr>
+						     <li>  <a href="abc.php">Delete all my ingredients</a>
+                             </li>	
+</div>
+</div>
+
+<div class="modal2">
+<div class="modal_close close"></div>
+<div class="modal_main">
+
+<img src="/cookingRecommendation/images/ex1.png" class="close" style="margin-top:13px;left:96%;position:fixed;">
+<Br>
+<br>
 						     <h4> What is cookingRecommendation?</h4>
-						     <p>o you have only few ingredients at home and don’t know what to make?
+						     <p>Do you have only few ingredients at home and don’t know what to make?
 							<br>
 							Supercook is a recipe search engine that finds recipes you can make with the ingredients you currently have at home. 
 							</p>
@@ -137,30 +225,19 @@
 						     <p>When you run out of an ingredient, make sure to delete it from Supercook. This way your recipe results will always be accurate and up to date. 
 						     	<Br>
 							If you choose the list view, click the red ‘trash’ icon next to any ingredient that you’d like to erase. If you’re on the category view, uncheck any ingredients you want to erase.</p>
-						     <hr>
+						    
 
-						   </div> 
-						  </div>
+</div>
+</div>
 
-						  <div style="display: none;" class="pop-outer2">
-						   <div class="pop-inner1">
-						   
-						    <input type="image" src='images/ex.png'  class="close2" />
-						    <br>
-						    <br>
-						     <li> <label>Delete all the ingredients: <input type="checkbox" ng-model="leader"></label><br/><br><br>
-						       <button ng-click="reset()">Submit</button>
-                             </li>						
-						   </div> 
-						  </div>
-
-						 
-					 </body>
+</body>				 
+					
 
 <header id="header">
 				<div id="header-inner">	
 					<div id="news">
-        <?php
+       
+					 <?php
 
 
 $form = "
@@ -173,7 +250,6 @@ $form = "
 </a>
 ";
 
-
 if (isset($_POST["submitbtn"])) {
     $email = strip_tags($_POST['email']);
 
@@ -183,7 +259,7 @@ if (isset($_POST["submitbtn"])) {
 
             mysql_query("INSERT INTO newsletter VALUES('', '$email')");
 
-            echo "<span class= 'spanulet'>You have been added to our newsletter.</span>";
+            echo " <span class= 'spanulet'>You have been added to our newsletter.</span>";
         }
         else
             echo " <a href='add.php'><span class= 'spanulet'>You did not submit a valid email!</span></a>";
@@ -204,24 +280,31 @@ else
 						<a href='index.php'>
 						<img src='images/recipes.png'></a>
 					</div>
+
 					<div id="top-nav">
+
 						<ul>
-							<li><a href='/cookingRecommendation/log/index.php'>
+							<li><a href=''>
 								<img src='images/facebook.png'>
 							</a></li>
 						<li><a href='/cookingRecommendation/log/index.php'>
 								<img src='images/login3.png'>
 							</a></li>
 						<li><a>
-								<input type="image" src='images/settings.png' class="open2"/>
+								<input type="image" src='images/settings.png' class="call_modal"/>
 						</a></li>
 							<li><a>
-								<input type="image" src='images/info.png' class="open1"/>
+								<input type="image" src='images/info.png' class="call_modal2"/>
 							</a></li>
 						</ul>
+
 					</div>
+
 					<div class="clr"></div>
+
 				</div>
+
 			</header>
+
 
 	</html>

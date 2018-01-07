@@ -33,7 +33,7 @@
                 <span style="color: blue">{{data.receipeName}}</span>
                 <ul>
                     <li ng-repeat="ingredient in data.ingredients">
-                        <span ng-bind="ingredient"></span>
+                        <span ng-bind="ingredient" ng-class="{green: ingredientInList(ingredient)}"></span>
                     </li>
                 </ul>
             </div>
@@ -43,9 +43,9 @@
 
 
 
-<script>
+<!-- <script>
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
-</script>
+</script> -->
