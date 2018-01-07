@@ -1,0 +1,26 @@
+<div class="modal-demo">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title" >
+                <span ng-bind="receipe.receipeName"></span>
+            </h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <table class="table">
+                <thead class="thead-inverse">
+                    <tr>
+                        <td style=" font-weight: 900;">Ingredient</td>
+                        <td style=" font-weight: 900;">Quantity</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="ingredient in receipe.ingredients">
+                        <td ng-bind="ingredient.ingredientName"></td>
+                        <td ng-bind="ingredient.ingredientQuantity"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="close()">OK</button>
+        </div>
+</div>

@@ -1,1 +1,1 @@
-var app = angular.module("cookingRecommendation", []);
+var app = angular.module("cookingRecommendation", ['ui.bootstrap']);

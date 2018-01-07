@@ -52,7 +52,8 @@ $data = $database->select('ingredient_to_receipe',[
     "[><]receipe"=>["id_receipe" => "id" ]
 ], [
     "ingredient.name(ingredientName)",
-    "receipe.name(receipeName)"
+    "receipe.name(receipeName)",
+    "ingredient_to_receipe.quantity(ingredientQuantity)"
 ],[
     "AND" => [
         "receipe.id" => $receipeIds
@@ -74,7 +75,10 @@ for ($i = 0; $i < count($data); $i++) {
         $aggregratedArray[$data[$i]["receipeName"] ]["ingredients"] = array();
     }
 
-    array_push($aggregratedArray[$data[$i]["receipeName"] ]["ingredients"], $data[$i]["ingredientName"] );
+    $ingredientObject = array();
+    $ingredientObject["ingredientName"] = $data[$i]["ingredientName"];
+    $ingredientObject["ingredientQuantity"] = $data[$i]["ingredientQuantity"];
+    array_push($aggregratedArray[$data[$i]["receipeName"] ]["ingredients"], $ingredientObject );
 }
 
 echo json_encode($aggregratedArray);

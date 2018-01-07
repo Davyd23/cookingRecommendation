@@ -61,8 +61,6 @@
 					/* Clear both sides to assist with div alignment  */
 					.clr { clear:both; padding:0; margin:0; width:100%; font-size:0px; line-height:0px;}
 				</style>
-				
-				<script src="jquery-1.10.2.min.js"></script>
 <style>
 body
 {

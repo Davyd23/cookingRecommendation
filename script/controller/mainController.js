@@ -1,4 +1,4 @@
-app.controller("MainController", function($scope, $http, $filter){
+app.controller("MainController", function($scope, $http, $filter, $uibModal){
     $scope.allIngredientsGroupedByCategory = [];
     $scope.menuToggled = {};
     $scope.availableIngredientsList = [];
@@ -64,7 +64,28 @@ app.controller("MainController", function($scope, $http, $filter){
         }else{
             $scope.availableIngredientsList.push(ingredient);
         }
-    }
+    };
+
+    $scope.openReceipeModal = function(receipe){
+        var modalInstance = $uibModal.open({
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'view/receipe.html',
+            controller: 'ReceipeController',
+            size: 500,
+            resolve: {
+                receipe: function () {
+                    return receipe;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            //success
+        }, function () {
+            //failure
+        });
+    };
 
 });
 
