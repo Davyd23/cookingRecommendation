@@ -39,6 +39,11 @@ app.controller("MainController", function($scope, $http, $filter){
         }
     };
 
+    $scope.ingredientInList = function(ingredient){
+        var ingredientIndex = $scope.availableIngredientsList.indexOf(ingredient);
+        return ingredientIndex !== -1;
+    };
+
 
     $scope.toggleMenuCategory = function(category){
         if(!$scope.menuToggled[category] ){

@@ -1,6 +1,6 @@
 <div id="page-content-wrapper">
     <div class="container-fluid">
-        <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
+        <!-- <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a> -->
         <button ng-click="getReceipes()" class="btn btn-primary">Search Recipes</button>
         <link rel='stylesheet' type='text/css' href='css/main.css'>
         <br>
@@ -15,7 +15,7 @@
                 <span style="color: blue">{{data.receipeName}}</span>
                 <ul>
                     <li ng-repeat="ingredient in data.ingredients">
-                        <span ng-bind="ingredient"></span>
+                        <span ng-bind="ingredient" ng-class="{green: ingredientInList(ingredient)}"></span>
                     </li>
                 </ul>
             </div>
@@ -25,9 +25,9 @@
 
 
 
-<script>
+<!-- <script>
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
-</script>
+</script> -->

@@ -1,16 +1,18 @@
 .ingredient_container{
+
     margin:10px;
 }
 .icon-arrow-right {
     float: right;
     margin-top: 10px;
     margin-right: 10px;
+
 }
+
 .ingredient{
     margin:5px;
     display: inline-block;
 }
-
 
 
 #subscribeForm-cta1:link {
@@ -38,11 +40,15 @@
 #subscribeForm-cta1 input[type=submit] {
 	border-radius: 50px;
 	padding: 3px;
-	width: 95px;
+	width: 55px;
 	background-color: white;
 	margin-top: 5px;
 }
 
+.green{
+	color:green;
+	font-size: 15px;
+}
 
 
 #subscribeForm-cta1:hover   {

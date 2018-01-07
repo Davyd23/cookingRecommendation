@@ -1,9 +1,13 @@
 <!-- Sidebar -->
+
 <div id="sidebar-wrapper">
+
     <ul class="sidebar-nav">
+
         <li class="sidebar-brand">
             
             <a href="#">
+
                 Your ingredients(<span ng-bind="availableIngredientsList.length"></span>)
             </a>
             <hr>

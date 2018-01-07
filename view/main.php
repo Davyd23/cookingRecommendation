@@ -1,5 +1,5 @@
 
-<div ng-controller="MainController" id="wrapper">
+<div ng-controller="MainController" id="wrapper" class="toggled">
     <div id="topBar">
     	 <div ng-include="'view/topbar.php'"></div>
     </div>
