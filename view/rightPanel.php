@@ -19,6 +19,16 @@
                 <div class="col-md-1"></div>
             </div>
         </div>
+
+
+        <div class="siteUsageInfo" ng-hide="receipes.length">
+            <p >Just add your ingredients and Cooking Recommendation instantly finds matching recipes from the most
+            popular cooking websites!(To be implemented)</p>
+
+            <p >To get started, choose your ingredients from the categories on the left.</p>
+            <p >Matching recipes that you can make will automatically appear and update.</p>
+
+        </div>
     </div>
 </div>
 
