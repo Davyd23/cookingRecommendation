@@ -1,0 +1,6 @@
+FROM mysql:5.6
+
+ENV MYSQL_DATABASE=fridgerecomandation \
+	MYSQL_ROOT_PASSWORD=pass
+
+EXPOSE 3306

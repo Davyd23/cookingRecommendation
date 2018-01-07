@@ -1,0 +1,6 @@
+FROM mysql:5.6
+
+ENV MYSQL_DATABASE=blogsite \
+	MYSQL_ROOT_PASSWORD=test
+
+EXPOSE 3306

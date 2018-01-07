@@ -8,9 +8,9 @@ function getAllIngredientsGroupedByCategory(){
     $database = new Medoo([
         'database_type' => 'mysql',
         'database_name' => 'fridgerecomandation',
-        'server' => 'localhost',
+        'server' => '192.168.99.100',
         'username' => 'root',
-        'password' => ''
+        'password' => 'pass'
     ]);
 
     $data = getAllIngredientsWithCategory($database);

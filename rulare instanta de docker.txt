@@ -1,0 +1,61 @@
+Pasi transf app php pt docker
+-1. In php dao ip-ul masini se schimba cu cel din docker si se pune parola la php
+0. In docker se seteaza calea proiectului
+1. Se creaza Dockerfile cu urmatorul continut
+	FROM php:7.0-apache
+	COPY ./ /var/www/html/
+2. Se ruleaza urmatoarea comanda, se ia si punctul
+	docker build -t cooking_recommendation .
+3. Se ruleaza 
+	docker run -itd -p 80:80 cooking_recommendation
+	
+4. Se intra pe ip-ul instantei de docker pt a vedea ca aplicatia functioneaza
+
+Baza de date
+
+1. docker pull mysql/mysql-server
+2. docker run --name fridgerecomandation -e MYSQL_ROOT_PASSWORD=pass -d mysql/mysql-server
+3. docker exec -it fridgerecomandation mysql -uroot -p
+
+
+
+
+
+
+
+
+docker ps - pt a vedea toate procesele 
+docker ps -a - pt a vedea toate containerele
+docker rm [container_id] - pt a sterge containerul
+docker images - pt a vedea toate imaginile
+
+
+
+
+You can just run an interactive shell container using that image and explore whatever content that image has.
+
+For instance:
+
+docker run -it image_name sh
+
+Or, if you want to see how the image was build, meaning the steps in its Dockerfile, you can:
+
+docker image history --no-trunc image_name > image_history
+The steps will be logged into the image_history file
+
+
+
+
+
+
+#!/bin/bash
+# Delete all containers
+docker rm $(docker ps -a -q)
+# Delete all images
+docker rmi $(docker images -q)
+
+
+
+You can log into the Docker Image using the root user (ID = 0) instead of the provided default user when you use the -u option. E.g.
+
+docker run -u 0 -it mycontainer bash

@@ -1,0 +1,13 @@
+version: '2'
+services:
+    php:
+        build: ./
+        ports:
+            - '8000:80'
+        depends_on:
+            - db
+
+    db:
+        build: ./docker/mysql2
+        ports:
+            - '3306:3306'
