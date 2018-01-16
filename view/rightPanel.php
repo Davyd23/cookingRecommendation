@@ -3,6 +3,12 @@
         <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
         <button ng-click="getReceipes()" class="btn btn-primary">Search Receipes</button>
 
+        <label>Sort By:</label>
+        <select ng-model="selected.sortBy">
+            <option value="t">Trending</option>
+            <option value="r">Top Rated</option>
+        </select>
+
         <br>
         <br>
         <br>
