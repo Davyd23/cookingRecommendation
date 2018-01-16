@@ -3,6 +3,7 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
     $scope.menuToggled = {};
     $scope.availableIngredientsList = [];
     $scope.receipes = [];
+    var ingredientsPerRequest = 30; //maximum value is 30
     $http.get("service/IngredientsGroupedByCategory.php").then(function(response){
         console.log(response);
         $scope.allIngredientsGroupedByCategory = response.data;
@@ -38,9 +39,21 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
 
     $scope.getReceipes = function(){
         if($scope.availableIngredientsList.length !== 0 ){
-            $http.post("service/receipesByIngredientsFromFood2Fork.php", {ingredients:$scope.availableIngredientsList}).then(function(response){
+            $http.post("service/receipesByIngredientsFromFood2Fork.php", {ingredients:$scope.availableIngredientsList,  pageNumber: 1}).then(function(response){
                 console.log(response);
                 $scope.receipes = removeExtraTextFromReceipes(response.data).recipes;
+            }, function(err){
+                console.log(err);
+            });
+        }
+    };
+
+    $scope.loadMoreReceipes = function(){
+        if($scope.receipes.length !== 0){
+            var page = ($scope.receipes.length / ingredientsPerRequest) +1;
+            $http.post("service/receipesByIngredientsFromFood2Fork.php", {ingredients:$scope.availableIngredientsList, pageNumber: page}).then(function(response){
+                console.log(response);
+                $scope.receipes = $scope.receipes.concat( removeExtraTextFromReceipes(response.data).recipes );
             }, function(err){
                 console.log(err);
             });

@@ -18,6 +18,9 @@
             </div>
         </div>
 
+        <div ng-show="receipes.length" style="text-align:center; width: 100%;">
+            <button class="btn btn-primary" ng-click="loadMoreReceipes()">Load more receipes</button>
+        </div>
 
         <div class="siteUsageInfo" ng-hide="receipes.length">
             <p >Just add your ingredients and Cooking Recommendation instantly finds matching recipes from the most
