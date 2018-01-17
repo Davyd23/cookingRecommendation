@@ -1,4 +1,8 @@
 <div id="page-content-wrapper">
+<!--    TODO de implementat top bar-->
+<!--    <div ng-include="'view/topBar.html'">
+
+    </div>-->
     <div class="container-fluid">
         <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
         <button ng-click="getReceipes()" class="btn btn-primary">Search Receipes</button>
@@ -16,11 +20,16 @@
             <div id="receipe" class="receipePreview" ng-repeat="receipe in receipes track by $index ">
                 <a target="_blank" href="{{receipe.f2f_url}}">
                     <span class="receipePreviewTitle">{{receipe.title}}</span>
-
-                    <div>
-                        <img style="width:100%; height:100%;" src="{{receipe.image_url}}">
-                    </div>
                 </a>
+
+                <div class="receipeContainer">
+                    <a ng-click="addToFavorite(receipe)">
+                        <span class="receipeContainerTag" >Add</span>
+                    </a>
+                    <a target="_blank" href="{{receipe.f2f_url}}">
+                        <img style="width:100%; height:100%;" src="{{receipe.image_url}}">
+                    </a>
+                </div>
             </div>
         </div>
 

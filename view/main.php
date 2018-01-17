@@ -1,8 +1,5 @@
 
 <div ng-controller="MainController" id="wrapper" class="toggled">
-    <div id="topBar">
-    	 <div ng-include="'view/topbar.php'"></div>
-    </div>
     <div id="leftPanel">
         <div ng-include="'view/leftPanel.php'"></div>
     </div>

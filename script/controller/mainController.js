@@ -3,6 +3,8 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
     $scope.menuToggled = {};
     $scope.availableIngredientsList = [];
     $scope.receipes = [];
+
+    $scope.userId = 1; //TODO sa fie dinamic
     $scope.selected = {
         sortBy: "r"
     } ;
@@ -41,14 +43,21 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
     };
 
     $scope.getReceipes = function(){
-        //if($scope.availableIngredientsList.length !== 0 ){
-            $http.post("service/receipesByIngredientsFromFood2Fork.php", {ingredients:$scope.availableIngredientsList,  pageNumber: 1, sort:$scope.selected.sortBy}).then(function(response){
-                console.log(response);
-                $scope.receipes = removeExtraTextFromReceipes(response.data).recipes;
-            }, function(err){
-                console.log(err);
-            });
-        //}
+        $http.post("service/receipesByIngredientsFromFood2Fork.php", {ingredients:$scope.availableIngredientsList,  pageNumber: 1, sort:$scope.selected.sortBy}).then(function(response){
+            console.log(response);
+            $scope.receipes = removeExtraTextFromReceipes(response.data).recipes;
+        }, function(err){
+            console.log(err);
+        });
+
+    };
+
+    $scope.addToFavorite = function(receipe){
+        $http.post("service/addToFavorite.php", {userId: $scope.userId, receipe: receipe}).then(function(response){
+            console.log(response);
+        }, function(err){
+            console.log(err);
+        });
     };
 
     $scope.loadMoreReceipes = function(){
