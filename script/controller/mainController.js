@@ -8,6 +8,7 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
     $scope.selected = {
         sortBy: "r"
     } ;
+    var favoriteReceipesIdsForUser = [];
     var ingredientsPerRequest = 30; //maximum value is 30
     $http.get("service/IngredientsGroupedByCategory.php").then(function(response){
         console.log(response);
@@ -45,7 +46,8 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
     $scope.getReceipes = function(){
         $http.post("service/receipesByIngredientsFromFood2Fork.php", {ingredients:$scope.availableIngredientsList,  pageNumber: 1, sort:$scope.selected.sortBy}).then(function(response){
             console.log(response);
-            $scope.receipes = removeExtraTextFromReceipes(response.data).recipes;
+            var receipes = setFavoredReceipe(removeExtraTextFromReceipes(response.data).recipes);
+            $scope.receipes = receipes;
         }, function(err){
             console.log(err);
         });
@@ -58,6 +60,40 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
         }, function(err){
             console.log(err);
         });
+        receipe.favored = !receipe.favored;
+    };
+
+    $scope.getFavoredReceipesForUser = function(){
+        $http.post("service/getFavoredReceipesForUser.php", {userId: $scope.userId}).then(function(response){
+            console.log(response);
+            favoriteReceipesIdsForUser = getOnlyTheObjectValues(response.data);
+        }, function(err){
+            console.log(err);
+        });
+    };
+    var getOnlyTheObjectValues = function (object) {
+        var objectValues = [];
+        for(var i=0; i<object.length; i++) {
+            for (var key in object[i]) {
+                if (object[i].hasOwnProperty(key)) {
+                    objectValues.push(object[i][key]);
+                }
+            }
+        }
+        return objectValues;
+    };
+
+    $scope.getFavoredReceipesForUser();
+
+    var setFavoredReceipe = function(receipes){
+        receipes.forEach(function(receipe) {
+            receipe.favored = false;
+            if(favoriteReceipesIdsForUser.indexOf(receipe.recipe_id) !== -1){
+                receipe.favored = true;
+            }
+        });
+
+        return receipes;
     };
 
     $scope.loadMoreReceipes = function(){
@@ -65,7 +101,8 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
             var page = ($scope.receipes.length / ingredientsPerRequest) +1;
             $http.post("service/receipesByIngredientsFromFood2Fork.php", {ingredients:$scope.availableIngredientsList, pageNumber: page, sort:$scope.selected.sortBy}).then(function(response){
                 console.log(response);
-                $scope.receipes = $scope.receipes.concat( removeExtraTextFromReceipes(response.data).recipes );
+                var receipes = setFavoredReceipe(removeExtraTextFromReceipes(response.data).recipes);
+                $scope.receipes = $scope.receipes.concat( receipes );
             }, function(err){
                 console.log(err);
             });
