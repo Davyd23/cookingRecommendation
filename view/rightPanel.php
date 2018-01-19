@@ -27,7 +27,7 @@
                         <i class="fa fa-heart-o receipeContainerTag" ng-hide="receipe.favored" aria-hidden="true"></i>
                         <i class="fa fa-heart receipeContainerTag" ng-show="receipe.favored" aria-hidden="true"></i>
                     </a>
-                    <a target="_blank" href="{{receipe.f2f_url}}">
+                    <a target="_blank" ng-click="openReceipeModal(receipe)">
                         <img style="width:100%; height:100%;" src="{{receipe.image_url}}">
                     </a>
                 </div>
