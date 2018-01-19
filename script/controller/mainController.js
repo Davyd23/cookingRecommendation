@@ -74,22 +74,29 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal, $co
     };
 
     $scope.addToFavorite = function(receipe){
-        $http.post("service/addToFavorite.php", {userId: $scope.user.id, receipe: receipe}).then(function(response){
-            console.log(response);
-        }, function(err){
-            console.log(err);
-        });
-        receipe.favored = !receipe.favored;
+        if($scope.user) {
+            $http.post("service/addToFavorite.php", {
+                userId: $scope.user.id,
+                receipe: receipe
+            }).then(function (response) {
+                console.log(response);
+            }, function (err) {
+                console.log(err);
+            });
+            receipe.favored = !receipe.favored;
+        }
     };
 
     $scope.getFavoredReceipesForUser = function(){
-        $http.post("service/getFavoredReceipesForUser.php", {userId: $scope.user.id}).then(function(response){
-            console.log(response);
-            favoriteReceipesIdsForUser = getOnlyTheObjectValues(response.data);
-            $scope.getReceipes();
-        }, function(err){
-            console.log(err);
-        });
+        if($scope.user) {
+            $http.post("service/getFavoredReceipesForUser.php", {userId: $scope.user.id}).then(function (response) {
+                console.log(response);
+                favoriteReceipesIdsForUser = getOnlyTheObjectValues(response.data);
+                $scope.getReceipes();
+            }, function (err) {
+                console.log(err);
+            });
+        }
     };
     var getOnlyTheObjectValues = function (object) {
         var objectValues = [];
@@ -166,7 +173,7 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal, $co
                     return receipe;
                 },
                 userId: function() {
-                    return $scope.user.id;
+                    return $scope.user!==null? $scope.user.id: null;
                 }
             }
         });
