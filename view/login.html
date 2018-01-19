@@ -1,19 +1,38 @@
 <div class="modal-demo">
     <div class="modal-header">
         <h3 class="modal-title" id="modal-title" >
-            Logged in as
-            <span ng-bind="user.email"></span>
+            <div ng-if="isUerAlreadyLogged">
+                Logged in as
+                <span ng-bind="user.email"></span>
+            </div>
+            <div ng-if="!isUerAlreadyLogged">
+                Login
+            </div>
         </h3>
     </div>
     <div class="modal-body" id="modal-body">
-        <form>
+        <div style="color:red;" ng-show="error">
+            <span>
+                Email or password are incorrect
+            </span>
+        </div>
+        <form ng-if="isUerAlreadyLogged===false">
             <div class="form-group">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" ng-model="selected.email" placeholder="Email">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" ng-model="selected.email" placeholder="Email">
             </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" ng-model="selected.password" placeholder="Password">
+            </div>
+
         </form>
+        <div ng-if="isUerAlreadyLogged===true">
+            Do you want to sign out ?
+        </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="login()">Login</button>
+        <button class="btn btn-primary" type="button" ng-click="login()" ng-if="!isUerAlreadyLogged">Login</button>
+        <button class="btn btn-primary" type="button" ng-click="logout()" ng-if="isUerAlreadyLogged">Sign Out</button>
     </div>
 </div>

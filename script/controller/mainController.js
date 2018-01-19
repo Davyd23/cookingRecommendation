@@ -4,7 +4,7 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal, $co
     $scope.availableIngredientsList = [];
     $scope.receipes = [];
 
-    $scope.user = {};
+    $scope.user = null;
     $scope.selected = {
         sortBy: "r"
     } ;
@@ -52,8 +52,6 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal, $co
 
     if($cookies.get('userEmail') ){
         $scope.getUserByEmail($cookies.get('userEmail') );
-    }else{
-        $scope.getUserByEmail("david@mail.com");
     }
 
 
@@ -194,8 +192,13 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal, $co
             }
         });
 
-        modalInstance.result.then(function (email) {
-            $scope.getUserByEmail(email);
+        modalInstance.result.then(function (object) {
+            if(object.login){
+                $scope.getUserByEmail(object.email);
+            }else{
+                $scope.user = null;
+                $cookies.remove("userEmail");
+            }
         }, function () {
             //failure
         });

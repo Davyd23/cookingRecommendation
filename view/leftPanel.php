@@ -4,7 +4,8 @@
 
     <ul class="sidebar-nav">
         <li class="sidebar-brand" style="font-size:14px;cursor:pointer" ng-click="openUserModal()">
-                Logged in as: {{user.email}}
+                <span ng-if="user!==null">Logged in as: {{user.email}}</span>
+                <span ng-if="user==null">Login</span>
             <hr>
         </li>
 

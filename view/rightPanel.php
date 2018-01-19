@@ -1,8 +1,4 @@
 <div id="page-content-wrapper">
-<!--    TODO de implementat top bar-->
-<!--    <div ng-include="'view/topBar.html'">
-
-    </div>-->
     <div class="container-fluid">
         <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
         <button ng-click="getReceipes()" class="btn btn-primary">Search Receipes</button>
