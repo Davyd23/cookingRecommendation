@@ -1,4 +1,4 @@
-app.controller("MainController", function($scope, $http, $filter, $uibModal){
+app.controller("MainController", function($scope, $http, $filter, $uibModal, $cookies){
     $scope.allIngredientsGroupedByCategory = [];
     $scope.menuToggled = {};
     $scope.availableIngredientsList = [];
@@ -39,6 +39,7 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
         $http.post("service/getUserByEmail.php", {email:email}).then(function(response){
             console.log(response);
             $scope.user = response.data;
+            $cookies.put('userEmail', $scope.user.email);
             $scope.getFavoredReceipesForUser();
 
         }, function(err){
@@ -46,7 +47,11 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
         });
     };
 
-    $scope.getUserByEmail("david@mail.com");
+    if($cookies.get('userEmail') ){
+        $scope.getUserByEmail($cookies.get('userEmail') );
+    }else{
+        $scope.getUserByEmail("david@mail.com");
+    }
 
 
     var removeExtraTextFromReceipes =function(receipesString){
