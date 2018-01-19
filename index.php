@@ -23,5 +23,6 @@
     <script src="script/application.js"></script>
     <script src="script/controller/mainController.js"></script>
     <script src="script/controller/receipeController.js"></script>
+    <script src="script/controller/LoginController.js"></script>
 </body>
 </html>

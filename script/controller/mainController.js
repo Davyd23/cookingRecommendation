@@ -4,7 +4,7 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
     $scope.availableIngredientsList = [];
     $scope.receipes = [];
 
-    $scope.userId = 1; //TODO sa fie dinamic
+    $scope.user = {};
     $scope.selected = {
         sortBy: "r"
     } ;
@@ -35,6 +35,19 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
     * filters end
     * */
 
+    $scope.getUserByEmail = function(email){
+        $http.post("service/getUserByEmail.php", {email:email}).then(function(response){
+            console.log(response);
+            $scope.user = response.data;
+            $scope.getFavoredReceipesForUser();
+
+        }, function(err){
+            console.log(err);
+        });
+    };
+
+    $scope.getUserByEmail("david@mail.com");
+
 
     var removeExtraTextFromReceipes =function(receipesString){
         while(receipesString[receipesString.length-1] !== "}"){
@@ -55,7 +68,7 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
     };
 
     $scope.addToFavorite = function(receipe){
-        $http.post("service/addToFavorite.php", {userId: $scope.userId, receipe: receipe}).then(function(response){
+        $http.post("service/addToFavorite.php", {userId: $scope.user.id, receipe: receipe}).then(function(response){
             console.log(response);
         }, function(err){
             console.log(err);
@@ -64,9 +77,10 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
     };
 
     $scope.getFavoredReceipesForUser = function(){
-        $http.post("service/getFavoredReceipesForUser.php", {userId: $scope.userId}).then(function(response){
+        $http.post("service/getFavoredReceipesForUser.php", {userId: $scope.user.id}).then(function(response){
             console.log(response);
             favoriteReceipesIdsForUser = getOnlyTheObjectValues(response.data);
+            $scope.getReceipes();
         }, function(err){
             console.log(err);
         });
@@ -82,8 +96,6 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
         }
         return objectValues;
     };
-
-    $scope.getFavoredReceipesForUser();
 
     var setFavoredReceipe = function(receipes){
         receipes.forEach(function(receipe) {
@@ -148,13 +160,34 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
                     return receipe;
                 },
                 userId: function() {
-                    return $scope.userId;
+                    return $scope.user.id;
                 }
             }
         });
 
         modalInstance.result.then(function (selectedItem) {
             //success
+        }, function () {
+            //failure
+        });
+    };
+
+    $scope.openUserModal = function(){
+        var modalInstance = $uibModal.open({
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'view/login.html',
+            controller: 'loginController',
+            size: 500,
+            resolve: {
+                user: function () {
+                    return $scope.user;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (email) {
+            $scope.getUserByEmail(email);
         }, function () {
             //failure
         });

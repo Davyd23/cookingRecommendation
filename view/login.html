@@ -1,0 +1,19 @@
+<div class="modal-demo">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title" >
+            Logged in as
+            <span ng-bind="user.email"></span>
+        </h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" ng-model="selected.email" placeholder="Email">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="login()">Login</button>
+    </div>
+</div>
