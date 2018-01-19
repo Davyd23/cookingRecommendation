@@ -13,6 +13,9 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal, $co
     $http.get("service/IngredientsGroupedByCategory.php").then(function(response){
         console.log(response);
         $scope.allIngredientsGroupedByCategory = response.data;
+        for(var key in $scope.allIngredientsGroupedByCategory){
+            $scope.allIngredientsGroupedByCategory[key] = removeDuplicates($scope.allIngredientsGroupedByCategory[key]);
+        }
     }, function(err){
         console.log(err);
     });
@@ -196,6 +199,16 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal, $co
         }, function () {
             //failure
         });
+    };
+
+    function removeDuplicates(arr){
+        var unique_array = [];
+        for(var i = 0;i < arr.length; i++){
+            if(unique_array.indexOf(arr[i]) == -1){
+                unique_array.push(arr[i])
+            }
+        }
+        return unique_array
     };
 
 });
