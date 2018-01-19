@@ -29,3 +29,10 @@ create table user_to_receipe(
 	id_user integer references users(id),
 	id_receipe integer references receipe(id)
 );
+
+create table comment(
+	id integer primary key auto_increment,
+	id_user integer references users(id),
+	id_receipe integer references receipe(id),
+	message text not null
+);

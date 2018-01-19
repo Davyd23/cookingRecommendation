@@ -146,6 +146,9 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
             resolve: {
                 receipe: function () {
                     return receipe;
+                },
+                userId: function() {
+                    return $scope.userId;
                 }
             }
         });
