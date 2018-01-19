@@ -1,1 +1,1 @@
-var app = angular.module("cookingRecommendation", ['ui.bootstrap']);
+var app = angular.module("cookingRecommendation", ['ui.bootstrap', 'ngSanitize', 'ngCookies']);

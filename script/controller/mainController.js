@@ -1,11 +1,21 @@
-app.controller("MainController", function($scope, $http, $filter, $uibModal){
+app.controller("MainController", function($scope, $http, $filter, $uibModal, $cookies){
     $scope.allIngredientsGroupedByCategory = [];
     $scope.menuToggled = {};
     $scope.availableIngredientsList = [];
     $scope.receipes = [];
+
+    $scope.user = null;
+    $scope.selected = {
+        sortBy: "r"
+    } ;
+    var favoriteReceipesIdsForUser = [];
+    var ingredientsPerRequest = 30; //maximum value is 30
     $http.get("service/IngredientsGroupedByCategory.php").then(function(response){
         console.log(response);
         $scope.allIngredientsGroupedByCategory = response.data;
+        for(var key in $scope.allIngredientsGroupedByCategory){
+            $scope.allIngredientsGroupedByCategory[key] = removeDuplicates($scope.allIngredientsGroupedByCategory[key]);
+        }
     }, function(err){
         console.log(err);
     });
@@ -28,6 +38,22 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
     * filters end
     * */
 
+    $scope.getUserByEmail = function(email){
+        $http.post("service/getUserByEmail.php", {email:email}).then(function(response){
+            console.log(response);
+            $scope.user = response.data;
+            $cookies.put('userEmail', $scope.user.email);
+            $scope.getFavoredReceipesForUser();
+
+        }, function(err){
+            console.log(err);
+        });
+    };
+
+    if($cookies.get('userEmail') ){
+        $scope.getUserByEmail($cookies.get('userEmail') );
+    }
+
 
     var removeExtraTextFromReceipes =function(receipesString){
         while(receipesString[receipesString.length-1] !== "}"){
@@ -37,10 +63,71 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
     };
 
     $scope.getReceipes = function(){
-        if($scope.availableIngredientsList.length !== 0 ){
-            $http.post("service/receipesByIngredientsFromFood2Fork.php", {ingredients:$scope.availableIngredientsList}).then(function(response){
+        $http.post("service/receipesByIngredientsFromFood2Fork.php", {ingredients:$scope.availableIngredientsList,  pageNumber: 1, sort:$scope.selected.sortBy}).then(function(response){
+            console.log(response);
+            var receipes = setFavoredReceipe(removeExtraTextFromReceipes(response.data).recipes);
+            $scope.receipes = receipes;
+        }, function(err){
+            console.log(err);
+        });
+
+    };
+
+    $scope.addToFavorite = function(receipe){
+        if($scope.user) {
+            $http.post("service/addToFavorite.php", {
+                userId: $scope.user.id,
+                receipe: receipe
+            }).then(function (response) {
                 console.log(response);
-                $scope.receipes = removeExtraTextFromReceipes(response.data).recipes;
+            }, function (err) {
+                console.log(err);
+            });
+            receipe.favored = !receipe.favored;
+        }
+    };
+
+    $scope.getFavoredReceipesForUser = function(){
+        if($scope.user) {
+            $http.post("service/getFavoredReceipesForUser.php", {userId: $scope.user.id}).then(function (response) {
+                console.log(response);
+                favoriteReceipesIdsForUser = getOnlyTheObjectValues(response.data);
+                $scope.getReceipes();
+            }, function (err) {
+                console.log(err);
+            });
+        }
+    };
+    var getOnlyTheObjectValues = function (object) {
+        var objectValues = [];
+        for(var i=0; i<object.length; i++) {
+            for (var key in object[i]) {
+                if (object[i].hasOwnProperty(key)) {
+                    objectValues.push(object[i][key]);
+                }
+            }
+        }
+        return objectValues;
+    };
+
+    var setFavoredReceipe = function(receipes){
+        receipes.forEach(function(receipe) {
+            receipe.favored = false;
+            if(favoriteReceipesIdsForUser.indexOf(receipe.recipe_id) !== -1){
+                receipe.favored = true;
+            }
+        });
+
+        return receipes;
+    };
+
+    $scope.loadMoreReceipes = function(){
+        if($scope.receipes.length !== 0){
+            var page = ($scope.receipes.length / ingredientsPerRequest) +1;
+            $http.post("service/receipesByIngredientsFromFood2Fork.php", {ingredients:$scope.availableIngredientsList, pageNumber: page, sort:$scope.selected.sortBy}).then(function(response){
+                console.log(response);
+                var receipes = setFavoredReceipe(removeExtraTextFromReceipes(response.data).recipes);
+                $scope.receipes = $scope.receipes.concat( receipes );
             }, function(err){
                 console.log(err);
             });
@@ -84,6 +171,9 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
             resolve: {
                 receipe: function () {
                     return receipe;
+                },
+                userId: function() {
+                    return $scope.user!==null? $scope.user.id: null;
                 }
             }
         });
@@ -93,6 +183,42 @@ app.controller("MainController", function($scope, $http, $filter, $uibModal){
         }, function () {
             //failure
         });
+    };
+
+    $scope.openUserModal = function(){
+        var modalInstance = $uibModal.open({
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'view/login.html',
+            controller: 'loginController',
+            size: 500,
+            resolve: {
+                user: function () {
+                    return $scope.user;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (object) {
+            if(object.login){
+                $scope.getUserByEmail(object.email);
+            }else{
+                $scope.user = null;
+                $cookies.remove("userEmail");
+            }
+        }, function () {
+            //failure
+        });
+    };
+
+    function removeDuplicates(arr){
+        var unique_array = [];
+        for(var i = 0;i < arr.length; i++){
+            if(unique_array.indexOf(arr[i]) == -1){
+                unique_array.push(arr[i])
+            }
+        }
+        return unique_array
     };
 
 });

@@ -3,7 +3,13 @@
 <div id="sidebar-wrapper">
 
     <ul class="sidebar-nav">
+        <li class="sidebar-brand" style="font-size:14px;cursor:pointer" ng-click="openUserModal()">
+                <span ng-if="user!==null">Logged in as: {{user.email}}</span>
+                <span ng-if="user==null">Login</span>
+            <hr>
+        </li>
 
+        <br>
         <li class="sidebar-brand">
             
             <a href="#">

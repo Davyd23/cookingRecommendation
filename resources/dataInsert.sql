@@ -16,27 +16,58 @@ INSERT INTO `ingredient`( `name`) VALUES ("apple"), ("mango");
 INSERT INTO `ingredient`( `name`) VALUES ("vanilla"), ("cinnamon"),("chili powder"),("oregano"),("paprika"), ("beef steak"), ("bacon"),("sausage"),("turkey"),("lamb"), ("salmon"), ("swordfish"),("cod"),("tuna steak"), ("oyster"), ("crab"),("lobster"),("octopus"),("shrimp"), ("cider vinegar"), ("fish sauce"),("mayonnaise"),("ketchup"),("mustard"),("vegetable oil"),("olive oil"),("peanut oil"), ("red wine"), ("whisky"),("brown beer"),("vodka"),("bourbon"), ("lemonade"), ("coffee"),("tea"),("coke"),("green tea"), ("curry paste"),("tomato sauce"),("pesto"), ("soybeans"), ("hummus");
 
 
+delimiter //
+CREATE PROCEDURE tie_ingredient_to_category (product_category char(50), ingredient char(50))
+BEGIN
 
+   insert into `ingredient_to_category`(`id_ingredient`,`id_category`) values (
+		(Select `id` from `ingredient` where `name` = ingredient ) ,
+		(Select `id` from `product_category` where `name` = product_category )
+	);
+END//
+delimiter ;
 
-
-INSERT INTO `ingredient_to_category`(`id_category`, `id_ingredient`) VALUES (1,1), (1, 3);
-INSERT INTO `ingredient_to_category`(`id_category`, `id_ingredient`) VALUES
- (3,6), (3, 7), (3,8), (3,9), (3,10),
- (4,11), (4, 12), (4, 13), (4,14), (4,15),
- (5,16), (5, 17), (5,18), (5,19),
- (6,20), (6, 21), (6,22), (6,23), (6,24),
- (7,25), (7, 26), (7,27), (7,28), (7,29),
- (8,30), (8, 31), (8,32),
- (9,33), (9, 34), (9,35), (9,36), (9,37),
- (10,38), (10, 39), (10,40), (10,41), (10,42),
- (11,43), (11, 44), (11,45),
- (12,46), (12,47);
-INSERT INTO `ingredient_to_category`(`id_category`, `id_ingredient`) VALUES (1,1), (1, 3), (1,4);
-
-INSERT INTO `receipe`(`name`) VALUES ("sala de fructe");
-
-INSERT INTO `receipe`(`name`) VALUES ("sala de fructe cu mango");
-
-INSERT INTO `ingredient_to_receipe`(`id_receipe`, `id_ingredient`, `quantity`) VALUES (1,1, 1), (1, 3, 1);
-
-INSERT INTO `ingredient_to_receipe`(`id_receipe`, `id_ingredient`, `quantity`) VALUES (3,1, 1), (3, 3, 1), (3, 4, 1);
+call tie_ingredient_to_category("fruits", "apple");
+call tie_ingredient_to_category("fruits", "mango");
+call tie_ingredient_to_category("spices", "vanilla");
+call tie_ingredient_to_category("spices", "cinnamon");
+call tie_ingredient_to_category("spices", "chili powder");
+call tie_ingredient_to_category("spices", "oregano");
+call tie_ingredient_to_category("spices", "paprika");
+call tie_ingredient_to_category("meats", "beef steak");
+call tie_ingredient_to_category("meats", "bacon");
+call tie_ingredient_to_category("meats", "sausage");
+call tie_ingredient_to_category("meats", "turkey");
+call tie_ingredient_to_category("meats", "lamb");
+call tie_ingredient_to_category("fish", "salmon");
+call tie_ingredient_to_category("fish", "swordfish");
+call tie_ingredient_to_category("fish", "cod");
+call tie_ingredient_to_category("fish", "tuna steak");
+call tie_ingredient_to_category("seafood", "oyster");
+call tie_ingredient_to_category("seafood", "crab");
+call tie_ingredient_to_category("seafood", "lobster");
+call tie_ingredient_to_category("seafood", "octopus");
+call tie_ingredient_to_category("seafood", "shrimp");
+call tie_ingredient_to_category("spices", "cider vinegar");
+call tie_ingredient_to_category("sauces", "fish sauce");
+call tie_ingredient_to_category("sauces", "mayonnaise");
+call tie_ingredient_to_category("sauces", "ketchup");
+call tie_ingredient_to_category("sauces", "mustard");
+call tie_ingredient_to_category("oils", "vegetable oil");
+call tie_ingredient_to_category("oils", "olive oil");
+call tie_ingredient_to_category("oils", "peanut oil");
+call tie_ingredient_to_category("alcohol", "red wine");
+call tie_ingredient_to_category("alcohol", "whisky");
+call tie_ingredient_to_category("alcohol", "brown beer");
+call tie_ingredient_to_category("alcohol", "vodka");
+call tie_ingredient_to_category("alcohol", "bourbon");
+call tie_ingredient_to_category("beverages", "lemonade");
+call tie_ingredient_to_category("beverages", "coffee");
+call tie_ingredient_to_category("beverages", "tea");
+call tie_ingredient_to_category("beverages", "coke");
+call tie_ingredient_to_category("beverages", "green tea");
+call tie_ingredient_to_category("sauces", "curry paste");
+call tie_ingredient_to_category("sauces", "tomato sauce");
+call tie_ingredient_to_category("sauces", "pesto");
+call tie_ingredient_to_category("legumes", "soybeans");
+call tie_ingredient_to_category("legumes", "hummus");

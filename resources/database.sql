@@ -5,13 +5,8 @@ create table ingredient(
 
 create table receipe(
 	id integer primary key AUTO_INCREMENT,
-	name text not null
-);
-
-create table ingredient_to_receipe(
-	id_ingredient integer  REFERENCES ingredient(id),
-	id_receipe integer REFERENCES receipe(id),
-	quantity integer not null
+	name text not null,
+	external_id integer not null
 );
 
 create table product_category(
@@ -22,4 +17,22 @@ create table product_category(
 create table ingredient_to_category(
 	id_category integer references product_category(id),
 	id_ingredient integer references ingredient(id)
+);
+
+create table users(
+	id integer primary key AUTO_INCREMENT,
+	email text not null,
+	password text not null
+);
+
+create table user_to_receipe(
+	id_user integer references users(id),
+	id_receipe integer references receipe(id)
+);
+
+create table comment(
+	id integer primary key auto_increment,
+	id_user integer references users(id),
+	id_receipe integer references receipe(id),
+	message text not null
 );

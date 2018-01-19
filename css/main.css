@@ -146,3 +146,17 @@
     color: black;
     margin-top: 50px;
 }
+.receipeContainer{
+	position: relative;
+}
+.receipeContainerTag{
+	float: right;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	z-index: 1000;
+	padding: 5px;
+	color: #FFFFFF;
+	font-weight: bold;
+	cursor: pointer;
+}
